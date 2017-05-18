@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>Big Loan Pugs</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+          integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous"/>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+            integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="jumbotron">
+    <div class="container">
+        <img class="img-responsive" src="/BigPugLoans.jpg"/>
+    </div>
+</div>
+<div class="container">
+
+    <div class="form-group">
+        <label for="applicationNumber">Application Number</label>
+        <input class="form-control" id="applicationNumber" type="text"
+               th:field="*{customer.applicationNumber}" disabled="true"/>
+    </div>
+    <form action="#" th:action="@{saveCustomer}" th:object="${customer}" method="POST">
+        <input type="hidden" id="applicationNumber" th:field="*{applicationNumber}"/>
+        <h2>Please enter your personal details</h2>
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input class="form-control" id="firstName" type="text" th:field="*{firstName}"/>
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input class="form-control" id="lastName" type="text" th:field="*{lastName}"/>
+        </div>
+        <div class="form-group">
+            <label for="street">Street</label>
+            <input class="form-control" id="street" type="text" th:field="*{street}"/>
+        </div>
+        <div class="form-group">
+            <label for="postCode">Postcode</label>
+            <input class="form-control" id="postCode" type="text" th:field="*{postCode}"/>
+        </div>
+        <div class="form-group">
+            <label for="city">City</label>
+            <input class="form-control" id="city" type="text" th:field="*{city}"/>
+        </div>
+        <button type="submit" class="btn btn-default">Proceed</button>
+
+    </form>
+</div>
+</body>
+</html>
