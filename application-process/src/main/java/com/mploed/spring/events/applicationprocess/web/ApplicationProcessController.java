@@ -62,6 +62,6 @@ public class ApplicationProcessController {
 				.send(MessageBuilder.withPayload(event).build());
 		LOGGER.info("Sent " + event.toString());
 
-		return new RedirectView(creditApplicationUrl + "/?applicationNumber=" + creditApplicationNumber.toString());
+		return new RedirectView(creditApplicationUrl + "/credit-application/" + creditApplicationNumber.toString());
 	}
 }

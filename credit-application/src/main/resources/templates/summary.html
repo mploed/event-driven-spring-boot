@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>Big Loan Pugs</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+          integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous"/>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+            integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="jumbotron">
+    <div class="container">
+        <img class="img-responsive" src="/BigPugLoans.jpg"/>
+    </div>
+</div>
+<div class="container">
+    <h1>Please review your credit before proceeding:</h1>
+    <div class="form-group">
+        <label for="applicationNumber">Application Number</label>
+        <input class="form-control" id="applicationNumber" type="text" th:field="*{creditDetails.applicationNumber}"
+               disabled="true"/>
+    </div>
+    <h2>Credit Details</h2>
+    <div class="form-group">
+        <label for="term">Term</label>
+        <input class="form-control" id="term" type="text" th:field="*{creditDetails.term}" disabled="true"/>
+    </div>
+    <div class="form-group">
+        <label for="amount">Amount</label>
+        <input class="form-control" id="amount" type="text" th:field="*{creditDetails.amount}" disabled="true"/>
+    </div>
+    <div class="form-group">
+        <label for="purpose">Purpose</label>
+        <input class="form-control" id="purpose" type="text" th:field="*{creditDetails.purpose}" disabled="true"/>
+    </div>
+    <h2>Financial Situation</h2>
+    <h3>Earnings</h3>
+    <div class="form-group">
+        <label for="income">Income</label>
+        <input class="form-control" id="income" type="text" th:field="*{financialSituation.earnings.income}"
+               disabled="true"/>
+    </div>
+    <div class="form-group">
+        <label for="childBenefit">Child Benefit</label>
+        <input class="form-control" id="childBenefit" type="text" th:field="*{financialSituation.earnings.childBenefit}"
+               disabled="true"/>
+    </div>
+    <div class="form-group">
+        <label for="rentalIncome">Rental Income</label>
+        <input class="form-control" id="rentalIncome" type="text" th:field="*{financialSituation.earnings.rentalIncome}"
+               disabled="true"/>
+    </div>
+
+    <h3>Outgoings</h3>
+    <div class="form-group">
+        <label for="rent">Rent</label>
+        <input class="form-control" id="rent" type="text" th:field="*{financialSituation.outgoings.rent}"
+               disabled="true"/>
+    </div>
+    <div class="form-group">
+        <label for="loanRepayments">Loan Repayments</label>
+        <input class="form-control" id="loanRepayments" type="text"
+               th:field="*{financialSituation.outgoings.loanRepayments}" disabled="true"/>
+    </div>
+    <div class="form-group">
+        <label for="costOfLiving">Cost Of Living</label>
+        <input class="form-control" id="costOfLiving" type="text"
+               th:field="*{financialSituation.outgoings.costOfLiving}" disabled="true"/>
+    </div>
+
+    <form action="#" th:action="@{confirm}" th:object="${applicationNumber}" method="POST">
+
+
+        <input type="hidden" id="applicationNumber" th:field="*{applicationNumber}"/>
+
+
+        <button type="submit" class="btn btn-default">Yes, I want this credit</button>
+    </form>
+
+</div>
+
+</body>
+</html>
