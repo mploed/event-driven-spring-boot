@@ -20,6 +20,11 @@ public class CreditApplicationStatus {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date customerEntered;
 
+	private String scoringResult;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date scoringDoneDate;
+
 	private CreditApplicationStatus() {
 	}
 
@@ -28,6 +33,22 @@ public class CreditApplicationStatus {
 		this.applicationStart = applicationStart;
 	}
 
+
+	public String getScoringResult() {
+		return scoringResult;
+	}
+
+	public void setScoringResult(String scoringResult) {
+		this.scoringResult = scoringResult;
+	}
+
+	public Date getScoringDoneDate() {
+		return scoringDoneDate;
+	}
+
+	public void setScoringDoneDate(Date scoringDoneDate) {
+		this.scoringDoneDate = scoringDoneDate;
+	}
 
 	public Date getCustomerEntered() {
 		return customerEntered;

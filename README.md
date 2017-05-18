@@ -30,6 +30,11 @@ Each of the modules is it's own Spring Boot Application which can be accessed as
         <td>9002</td>
         <td>http://localhost:9002/customer</td>
     </tr>
+    <tr>
+        <td>Scoring</td>
+        <td>9003</td>
+        <td>No UI</td>
+    </tr>
       
     
 </table>
@@ -70,6 +75,25 @@ Consumers:
 
 Topic: CustomerCreatedTopic
 
+#### ScoringPositiveEvent
+Source: scoring
+
+Persisted in source: no
+
+Consumers:
+- application-process
+
+Topic: ScoringPositiveTopic
+
+#### ScoringNegativeEvent
+Source: scoring
+
+Persisted in source: no
+
+Consumers:
+- application-process
+
+Topic: ScoringNegativeTopic
 
 ### Internal Events
 

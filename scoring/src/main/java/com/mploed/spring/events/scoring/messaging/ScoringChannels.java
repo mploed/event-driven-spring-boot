@@ -1,18 +1,19 @@
-package com.mploed.spring.events.applicationprocess.messaging;
+package com.mploed.spring.events.scoring.messaging;
 
 import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.SubscribableChannel;
 
-public interface ApplicationProcessChannels {
+public interface ScoringChannels {
 	String CREDIT_APPLICATION_ENTERED = "creditApplicationEnteredIn";
 	String CUSTOMER_CREATED = "customerCreatedIn";
-	String SCORING_POSITIVE = "scoringPositiveIn";
-	String SCORING_NEGATIVE = "scoringNegativeIn";
 
 	@Output
-	MessageChannel creditApplicationNumberGeneratedOut();
+	MessageChannel scoringPositiveOut();
+
+	@Output
+	MessageChannel scoringNegativeOut();
 
 	@Input
 	SubscribableChannel creditApplicationEnteredIn();
@@ -20,9 +21,4 @@ public interface ApplicationProcessChannels {
 	@Input
 	SubscribableChannel customerCreatedIn();
 
-	@Input
-	SubscribableChannel scoringPositiveIn();
-
-	@Input
-	SubscribableChannel scoringNegativeIn();
 }
