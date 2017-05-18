@@ -33,7 +33,7 @@ Each of the modules is it's own Spring Boot Application which can be accessed as
     
 </table>
 
-## Messageing Infrastructure & Domain Events
+## Messaging Infrastructure & Domain Events
 
 ### Public Events
 
