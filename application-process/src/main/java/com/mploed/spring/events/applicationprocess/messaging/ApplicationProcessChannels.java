@@ -7,11 +7,15 @@ import org.springframework.messaging.SubscribableChannel;
 
 public interface ApplicationProcessChannels {
 	String CREDIT_APPLICATION_ENTERED = "creditApplicationEnteredIn";
+	String CUSTOMER_CREATED = "customerCreatedIn";
 
 	@Output
 	MessageChannel creditApplicationNumberGeneratedOut();
 
 	@Input
 	SubscribableChannel creditApplicationEnteredIn();
+
+	@Input
+	SubscribableChannel customerCreatedIn();
 
 }

@@ -17,12 +17,24 @@ public class CreditApplicationStatus {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date creditApplicationEntered;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date customerEntered;
+
 	private CreditApplicationStatus() {
 	}
 
 	public CreditApplicationStatus(String applicationNumber, Date applicationStart) {
 		this.applicationNumber = applicationNumber;
 		this.applicationStart = applicationStart;
+	}
+
+
+	public Date getCustomerEntered() {
+		return customerEntered;
+	}
+
+	public void setCustomerEntered(Date customerEntered) {
+		this.customerEntered = customerEntered;
 	}
 
 	public Long getId() {

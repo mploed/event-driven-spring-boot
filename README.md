@@ -26,10 +26,11 @@ Each of the modules is it's own Spring Boot Application which can be accessed as
         <td>http://localhost:9001/credit-application</td>
     </tr>
     <tr>
-        <td>Credit Application</td>
+        <td>Customer</td>
         <td>9002</td>
         <td>http://localhost:9002/customer</td>
     </tr>
+      
     
 </table>
 
@@ -57,6 +58,17 @@ Consumers:
 - application-process
 
 Topic: CreditApplicationEnteredTopic
+
+
+#### CustomerCreatedEvent
+Source: customer
+
+Persisted in source: no
+
+Consumers:
+- application-process
+
+Topic: CustomerCreatedTopic
 
 
 ### Internal Events

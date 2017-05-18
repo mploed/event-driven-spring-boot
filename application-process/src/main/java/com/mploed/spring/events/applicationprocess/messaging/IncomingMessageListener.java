@@ -2,11 +2,14 @@ package com.mploed.spring.events.applicationprocess.messaging;
 
 import com.mploed.spring.events.applicationprocess.domain.CreditApplicationStatus;
 import com.mploed.spring.events.applicationprocess.events.incoming.CreditApplicationEnteredEvent;
+import com.mploed.spring.events.applicationprocess.events.incoming.Customer;
+import com.mploed.spring.events.applicationprocess.events.incoming.CustomerCreatedEvent;
 import com.mploed.spring.events.applicationprocess.repository.CreditApplicationStatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Date;
 
@@ -14,15 +17,26 @@ import java.util.Date;
 public class IncomingMessageListener {
 	private CreditApplicationStatusRepository creditApplicationStatusRepository;
 
-	@Autowired
-	public IncomingMessageListener(CreditApplicationStatusRepository creditApplicationStatusRepository) {
+	private RestTemplate restTemplate;
+
+	public IncomingMessageListener(CreditApplicationStatusRepository creditApplicationStatusRepository, RestTemplate restTemplate) {
 		this.creditApplicationStatusRepository = creditApplicationStatusRepository;
+		this.restTemplate = restTemplate;
 	}
 
 	@StreamListener(ApplicationProcessChannels.CREDIT_APPLICATION_ENTERED)
 	public void receiveCreditApplicationEnteredEvent(@Payload CreditApplicationEnteredEvent creditApplicationEnteredEvent) {
 		CreditApplicationStatus status = creditApplicationStatusRepository.findByApplicationNumber(creditApplicationEnteredEvent.getApplicationNumber());
 		status.setCreditApplicationEntered(creditApplicationEnteredEvent.getCreationTime());
+		creditApplicationStatusRepository.save(status);
+	}
+
+
+	@StreamListener(ApplicationProcessChannels.CUSTOMER_CREATED)
+	public void receiveCustomerCreatedEvent(@Payload CustomerCreatedEvent customerCreatedEvent) {
+		Customer customer = restTemplate.getForObject(customerCreatedEvent.getCustomerUrl(), Customer.class);
+		CreditApplicationStatus status = creditApplicationStatusRepository.findByApplicationNumber(customer.getApplicationNumber());
+		status.setCustomerEntered(customer.getUpdated());
 		creditApplicationStatusRepository.save(status);
 	}
 }
