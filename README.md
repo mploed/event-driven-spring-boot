@@ -13,7 +13,6 @@ Each of the modules is it's own Spring Boot Application which can be accessed as
     <tr>
         <th>Name</th>
         <th>Application / Enpoint Type</th>
-        <th>Port</th>
         <th>URL</th>
     </tr>
     <tr>
