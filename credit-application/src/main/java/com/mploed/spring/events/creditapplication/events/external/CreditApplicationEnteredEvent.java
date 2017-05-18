@@ -35,6 +35,8 @@ public class CreditApplicationEnteredEvent {
 
 
 	public CreditApplicationEnteredEvent(String applicationNumber, CreditDetails creditDetails, FinancialSituation financialSituation) {
+		this.creationTime = new Date();
+		this.eventId = UUID.randomUUID();
 		this.applicationNumber = applicationNumber;
 		this.creditDetails = creditDetails;
 		this.financialSituation = financialSituation;
@@ -62,5 +64,17 @@ public class CreditApplicationEnteredEvent {
 
 	public FinancialSituation getFinancialSituation() {
 		return financialSituation;
+	}
+
+	@Override
+	public String toString() {
+		return "CreditApplicationEnteredEvent{" +
+				"id=" + id +
+				", eventId=" + eventId +
+				", creationTime=" + creationTime +
+				", applicationNumber='" + applicationNumber + '\'' +
+				", creditDetails=" + creditDetails +
+				", financialSituation=" + financialSituation +
+				'}';
 	}
 }

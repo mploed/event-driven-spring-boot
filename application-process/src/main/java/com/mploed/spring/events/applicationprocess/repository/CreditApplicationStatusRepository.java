@@ -4,4 +4,6 @@ import com.mploed.spring.events.applicationprocess.domain.CreditApplicationStatu
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CreditApplicationStatusRepository extends JpaRepository<CreditApplicationStatus, Long> {
+	CreditApplicationStatus findByApplicationNumber(String applicationNumber);
+
 }

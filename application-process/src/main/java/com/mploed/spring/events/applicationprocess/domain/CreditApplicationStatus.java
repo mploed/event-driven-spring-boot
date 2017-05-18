@@ -14,6 +14,9 @@ public class CreditApplicationStatus {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date applicationStart;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date creditApplicationEntered;
+
 	private CreditApplicationStatus() {
 	}
 
@@ -46,12 +49,21 @@ public class CreditApplicationStatus {
 		this.applicationStart = applicationStart;
 	}
 
+	public Date getCreditApplicationEntered() {
+		return creditApplicationEntered;
+	}
+
+	public void setCreditApplicationEntered(Date creditApplicationEntered) {
+		this.creditApplicationEntered = creditApplicationEntered;
+	}
+
 	@Override
 	public String toString() {
 		return "CreditApplicationStatus{" +
 				"id=" + id +
 				", applicationNumber='" + applicationNumber + '\'' +
 				", applicationStart=" + applicationStart +
+				", creditApplicationEntered=" + creditApplicationEntered +
 				'}';
 	}
 }

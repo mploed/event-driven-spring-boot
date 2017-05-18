@@ -54,6 +54,7 @@ Source: credit-application
 Persisted in source: yes in its own Table via JPA
 
 Consumers:
+- application-process
 
 Topic: CreditApplicationEnteredTopic
 

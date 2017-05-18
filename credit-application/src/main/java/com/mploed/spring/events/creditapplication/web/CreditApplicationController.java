@@ -89,8 +89,9 @@ public class CreditApplicationController {
 		CreditApplicationEnteredEvent creditApplicationEnteredEvent = new CreditApplicationEnteredEvent(applicationNumber,
 				creditDetailsEnteredEvent.getCreditDetails(),
 				financialSituationEnteredEvent.getFinancialSituation());
-		creditDetailsEnteredEventRepository.save(creditDetailsEnteredEvent);
-		creditApplicationChannels.creditApplicationEnteredOut().send(MessageBuilder.withPayload(creditApplicationEnteredEvent).build());
+		CreditApplicationEnteredEvent savedEvent = creditApplicationEnteredEventRepository.save(creditApplicationEnteredEvent);
+		creditApplicationChannels.creditApplicationEnteredOut().send(MessageBuilder.withPayload(savedEvent).build());
+		LOGGER.info(savedEvent.toString());
 		return new RedirectView(customerUrl + "/customer/" + applicationNumber);
 	}
 
