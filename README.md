@@ -151,3 +151,36 @@ Url: http://localhost:9004/credit-decision/feed
 Contains Application Numbers that have been confirmed
 
 
+## Event Types being used
+This demo shows various types of event types: Events with all the data, Events with Resource Urls and "Events" as Feeds
+
+#### Events with all the data
+Especially the CreditApplicationEnteredEvent falls into this category: it contains all of the data for the credit application
+such as the financial situation and the details of the actual credit. By consuming this event you will not need additional
+roundtrips to upstream systems
+
+Other events that fall into this category are:
+- ApplicationNumberGeneratedEvent
+- ScoringNegativeEvent
+- ScoringPositiveEvent
+- ApplicationDeclinedEvent
+
+##### Idea of Bounded Context:
+Please take a close look at how the CreditApplicationEnteredEvent is being reflected in the scoring application. Yes, we
+take in all the payload from the broker but the public model of the event has a clear focus on the scoring context's view 
+  on the data.
+
+#### Events with a Resource URL
+These Events do not contain a lot of information. They may contian something like a business process identifier such as
+the applicationNumber in this example but for the purpose of this demo I refrained from doing that. So the CustomerCreatedEvent
+only contians the URL to the Customer REST Resource from which interested contexts can obtain the payload from.
+
+
+#### "Events" via Feeds
+Althoug the usage of feeds is no plain and pure event driven processing style I think that they come in handy when you
+are dealing with situations like these:
+- you have issues with your message broker and firewalls and these issues can't be resolved easily
+- you need to have an event replay functionality in place that enables consumers to restore their replicated data
+
+You can find "Events via Feeds" in the customer and the credit-decision (see Feeds) applications. 
+
