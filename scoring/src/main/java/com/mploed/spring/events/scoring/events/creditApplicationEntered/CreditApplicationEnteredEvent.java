@@ -42,23 +42,23 @@ public class CreditApplicationEnteredEvent {
 		return applicationNumber;
 	}
 
-	public void setApplicationNumber(String applicationNumber) {
+	private void setApplicationNumber(String applicationNumber) {
 		this.applicationNumber = applicationNumber;
 	}
 
-	public CreditDetails getCreditDetails() {
+	private CreditDetails getCreditDetails() {
 		return creditDetails;
 	}
 
-	public void setCreditDetails(CreditDetails creditDetails) {
+	private void setCreditDetails(CreditDetails creditDetails) {
 		this.creditDetails = creditDetails;
 	}
 
-	public FinancialSituation getFinancialSituation() {
+	private FinancialSituation getFinancialSituation() {
 		return financialSituation;
 	}
 
-	public void setFinancialSituation(FinancialSituation financialSituation) {
+	private void setFinancialSituation(FinancialSituation financialSituation) {
 		this.financialSituation = financialSituation;
 	}
 
