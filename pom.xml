@@ -15,7 +15,6 @@
         <module>credit-application</module>
         <module>credit-decision</module>
         <module>customer</module>
-        <module>customer-communication</module>
         <module>scoring</module>
     </modules>
     
