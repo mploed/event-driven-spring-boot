@@ -67,6 +67,10 @@ public class CreditDecisionPoller {
 
 
 					CreditApplicationStatus applicationStatus = repository.findByApplicationNumber(applicationNumber);
+					if (applicationStatus != null) {
+						applicationStatus.setApproved(true);
+						repository.save(applicationStatus);
+					}
 					if ((lastUpdateInFeed == null) || (entry.getUpdated().after(lastUpdateInFeed))) {
 						lastUpdateInFeed = entry.getUpdated();
 					}
