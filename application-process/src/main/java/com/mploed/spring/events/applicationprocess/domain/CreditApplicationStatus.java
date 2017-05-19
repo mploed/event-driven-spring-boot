@@ -25,6 +25,8 @@ public class CreditApplicationStatus {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date scoringDoneDate;
 
+	private Boolean approved;
+
 	private CreditApplicationStatus() {
 	}
 
@@ -33,6 +35,14 @@ public class CreditApplicationStatus {
 		this.applicationStart = applicationStart;
 	}
 
+
+	public Boolean getApproved() {
+		return approved;
+	}
+
+	public void setApproved(Boolean approved) {
+		this.approved = approved;
+	}
 
 	public String getScoringResult() {
 		return scoringResult;
