@@ -32,8 +32,8 @@ public class CreditApplicationController {
 	private CreditApplicationChannels creditApplicationChannels;
 
 
-	@Value("${customer-url}")
-	private String customerUrl;
+	@Value("${next-process-step-url}")
+	private String nextProcessStepUrl;
 
 	@Autowired
 	public CreditApplicationController(CreditDetailsEnteredEventRepository creditDetailsEnteredEventRepository,
@@ -92,7 +92,7 @@ public class CreditApplicationController {
 		CreditApplicationEnteredEvent savedEvent = creditApplicationEnteredEventRepository.save(creditApplicationEnteredEvent);
 		creditApplicationChannels.creditApplicationEnteredOut().send(MessageBuilder.withPayload(savedEvent).build());
 		LOGGER.info(savedEvent.toString());
-		return new RedirectView(customerUrl + "/customer/" + applicationNumber);
+		return new RedirectView(nextProcessStepUrl + applicationNumber);
 	}
 
 }

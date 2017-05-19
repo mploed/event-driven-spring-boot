@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.UUID;
 
@@ -27,8 +26,8 @@ public class ApplicationProcessController {
 	private ApplicationProcessChannels applicationProcessChannels;
 
 
-	@Value("${credit-application-url}")
-	private String creditApplicationUrl;
+	@Value("${next-process-step-url}")
+	private String nextProcessStepUrl;
 
 
 	@Autowired
@@ -62,6 +61,8 @@ public class ApplicationProcessController {
 				.send(MessageBuilder.withPayload(event).build());
 		LOGGER.info("Sent " + event.toString());
 
-		return new RedirectView(creditApplicationUrl + "/credit-application/" + creditApplicationNumber.toString());
+		return new RedirectView(nextProcessStepUrl + creditApplicationNumber.toString());
 	}
+
+
 }

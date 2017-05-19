@@ -7,12 +7,14 @@ import com.mploed.spring.events.customer.repository.CustomerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Date;
 
@@ -20,6 +22,12 @@ import java.util.Date;
 @RequestMapping("/customer")
 public class CustomerController {
 	private Logger LOGGER = LoggerFactory.getLogger(CustomerController.class);
+
+	@Value("${next-process-step-url}")
+	private String nextProcessStepUrl;
+
+	@Value("${route-to-self}")
+	private String routeToSelf;
 
 	private CustomerRepository customerRepository;
 
@@ -40,13 +48,14 @@ public class CustomerController {
 	}
 
 	@PostMapping("/saveCustomer")
-	public String saveCustomer(@ModelAttribute Customer customer, Model model) {
+	public RedirectView saveCustomer(@ModelAttribute Customer customer, Model model) {
 		customer.setUpdated(new Date());
 		Customer savedCustomer = customerRepository.save(customer);
+
 		CustomerCreatedEvent customerCreatedEvent =
-				new CustomerCreatedEvent("http://localhost:9002/customer/rest/" + savedCustomer.getId());
+				new CustomerCreatedEvent(routeToSelf + "customer/rest/" + savedCustomer.getId());
 		customerChannels.customerCreatedOut().send(MessageBuilder.withPayload(customerCreatedEvent).build());
-		return "confirm";
+		return new RedirectView(nextProcessStepUrl + customer.getApplicationNumber());
 	}
 
 	@RequestMapping(value = "/feed", produces = "application/atom+xml")
