@@ -30,17 +30,17 @@ Each of the modules is it's own Spring Boot Application which can be accessed as
     <tr>
         <td>Application Process</td>
         <td>9000</td>
-        <td>[http://localhost:9000](http://localhost:9000)</td>
+        <td>http://localhost:9000</td>
     </tr>
     <tr>
         <td>Credit Application</td>
         <td>9001</td>
-        <td>[http://localhost:9001/credit-application](http://localhost:9001/credit-application)</td>
+        <td>http://localhost:9001/credit-application</td>
     </tr>
     <tr>
         <td>Customer</td>
         <td>9002</td>
-        <td>[http://localhost:9002/customer](http://localhost:9002/customer) and [http://localhost:9002/customer/feed](http://localhost:9002/customer/feed)</td>
+        <td>http://localhost:9002/customer and http://localhost:9002/customer/feed</td>
     </tr>
     <tr>
         <td>Scoring</td>
@@ -50,7 +50,7 @@ Each of the modules is it's own Spring Boot Application which can be accessed as
      <tr>
         <td>CreditDecision</td>
         <td>9004</td>
-        <td>[http://localhost:9004/credit-decision](http://localhost:9004/credit-decision) and [http://localhost:9004/credit-decision/feed](http://localhost:9004/credit-decision/feed)</td>
+        <td>http://localhost:9004/credit-decision and http://localhost:9004/credit-decision/feed</td>
     </tr>
       
     
