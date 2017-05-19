@@ -1,10 +1,22 @@
 # Event Driven Applications with Spring Boot
 
+This projects tries to capture various options you have when dealing with Event Driven Spring Boot applications.
+The follwing Spring Technologies are being used:
+- Spring Boot
+- Spring Cloud Stream Rabbit
+- Spring Data JPA
+
+These examples contain various different ways to model and deal with events:
+- Complete aggregates / entities in the events
+- REST Resource URLs in events
+- Partial parsing / handling of events in consumers
+- Events as Atom Feeds
 
 ## Prerequisites
 - A basic installation of RabbitMQ must be installed and running (rabbitmq-server)
 
 ## How to run and install the example
+Compile each module with mvn clean install and start them with mvn spring:run
 
 ## URLs and Ports
 Each of the modules is it's own Spring Boot Application which can be accessed as follows:
@@ -18,17 +30,17 @@ Each of the modules is it's own Spring Boot Application which can be accessed as
     <tr>
         <td>Application Process</td>
         <td>9000</td>
-        <td>http://localhost:9000/</td>
+        <td>[http://localhost:9000](http://localhost:9000)</td>
     </tr>
     <tr>
         <td>Credit Application</td>
         <td>9001</td>
-        <td>http://localhost:9001/credit-application</td>
+        <td>[http://localhost:9001/credit-application](http://localhost:9001/credit-application)</td>
     </tr>
     <tr>
         <td>Customer</td>
         <td>9002</td>
-        <td>http://localhost:9002/customer</td>
+        <td>[http://localhost:9002/customer](http://localhost:9002/customer) and [http://localhost:9002/customer/feed](http://localhost:9002/customer/feed)</td>
     </tr>
     <tr>
         <td>Scoring</td>
@@ -38,7 +50,7 @@ Each of the modules is it's own Spring Boot Application which can be accessed as
      <tr>
         <td>CreditDecision</td>
         <td>9004</td>
-        <td>http://localhost:9004/credit-decision and http://localhost:9004/credit-decision/feed</td>
+        <td>[http://localhost:9004/credit-decision](http://localhost:9004/credit-decision) and [http://localhost:9004/credit-decision/feed](http://localhost:9004/credit-decision/feed)</td>
     </tr>
       
     
@@ -55,6 +67,7 @@ Persisted in source: no
 
 Consumers:
 - credit-application
+- credit-decision
 
 Topic: CreditApplicationNumberGeneratedTopic
 
@@ -66,6 +79,7 @@ Persisted in source: yes in its own Table via JPA
 
 Consumers:
 - application-process
+- credit-decision
 
 Topic: CreditApplicationEnteredTopic
 
@@ -77,6 +91,7 @@ Persisted in source: no
 
 Consumers:
 - application-process
+- credit-decision
 
 Topic: CustomerCreatedTopic
 
@@ -87,6 +102,7 @@ Persisted in source: no
 
 Consumers:
 - application-process
+- credit-decision
 
 Topic: ScoringPositiveTopic
 
@@ -97,8 +113,19 @@ Persisted in source: no
 
 Consumers:
 - application-process
+- credit-decision
 
 Topic: ScoringNegativeTopic
+
+#### ApplicationDeclinedEvent
+Source: credit-decision
+
+Persisted in source: not as an event
+
+Consumers:
+- application-process
+
+Topic: ApplicationDeclinedTopic
 
 ### Internal Events
 
@@ -109,3 +136,18 @@ Topic: ScoringNegativeTopic
 Both events are stored
 Source: credit-application
 Storage: Own Table via JPA
+
+
+### Feeds
+
+#### Customer Feed
+Url: http://localhost:9002/customer/feed
+
+Contains URLs to Customer Resources
+
+#### Credit Decision Feed
+Url: http://localhost:9004/credit-decision/feed
+
+Contains Application Numbers that have been confirmed
+
+
