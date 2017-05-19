@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>Big Loan Pugs</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+          integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous"/>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+            integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="jumbotron">
+    <div class="container">
+        <img class="img-responsive" src="/BigPugLoans.jpg"/>
+    </div>
+</div>
+<div class="container">
+    <h1>Available Decision Memos</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Application Number</th>
+            <th>Number verified</th>
+            <th>Monthly Income</th>
+            <th>Monthly Outgoings</th>
+            <th>Credit Amount</th>
+            <th>Credit Term</th>
+            <th>Credit Reason</th>
+            <th>Customer Name</th>
+            <th>Customer City</th>
+            <th>Scoring Positive</th>
+            <th>Last Update</th>
+
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="memo : ${memoList}">
+            <td th:text="${memo.applicationNumber}"/>
+            <td th:text="${memo.applicationNumberVerified}"/>
+            <td th:text="${memo.monthlyIncome}"/>
+            <td th:text="${memo.monthlyOutgoins}"/>
+            <td th:text="${memo.creditAmount}"/>
+            <td th:text="${memo.creditTerm}"/>
+            <td th:text="${memo.creditReason}"/>
+            <td th:text="${memo.customerName}"/>
+            <td th:text="${memo.customerCity}"/>
+            <td th:text="${memo.scoredPositive}"/>
+            <td th:text="${memo.lastUpdate}"/>
+
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

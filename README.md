@@ -35,6 +35,11 @@ Each of the modules is it's own Spring Boot Application which can be accessed as
         <td>9003</td>
         <td>No UI</td>
     </tr>
+     <tr>
+        <td>CreditDecision</td>
+        <td>9004</td>
+        <td>http://localhost:9004/credit-decision and http://localhost:9004/credit-decision/feed</td>
+    </tr>
       
     
 </table>
