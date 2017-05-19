@@ -10,12 +10,16 @@ public interface ApplicationProcessChannels {
 	String CUSTOMER_CREATED = "customerCreatedIn";
 	String SCORING_POSITIVE = "scoringPositiveIn";
 	String SCORING_NEGATIVE = "scoringNegativeIn";
+	String CREDIT_APPLICATION_DECLINED = "creditApplicationDeclinedIn";
 
 	@Output
 	MessageChannel creditApplicationNumberGeneratedOut();
 
 	@Input
 	SubscribableChannel creditApplicationEnteredIn();
+
+	@Input
+	SubscribableChannel creditApplicationDeclinedIn();
 
 	@Input
 	SubscribableChannel customerCreatedIn();
