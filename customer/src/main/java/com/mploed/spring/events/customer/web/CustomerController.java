@@ -23,10 +23,10 @@ import java.util.Date;
 public class CustomerController {
 	private Logger LOGGER = LoggerFactory.getLogger(CustomerController.class);
 
-	@Value("${next-process-step-url}")
+	@Value("${nextProcessStepUrl}")
 	private String nextProcessStepUrl;
 
-	@Value("${route-to-self}")
+	@Value("${routeToSelf}")
 	private String routeToSelf;
 
 	private CustomerRepository customerRepository;

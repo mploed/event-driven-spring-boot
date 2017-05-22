@@ -1,0 +1,11 @@
+---
+applications:
+- name: event-credit-application
+  memory: 1024M
+  timeout: 180
+  path: target/credit-application-0.0.1-SNAPSHOT.jar
+  services:
+      - mysql-event-credit-application
+      - event-rabbitmq
+  env:
+    nextProcessStepUrl: https://event-customer.cfapps.io/customer/

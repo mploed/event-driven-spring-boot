@@ -25,8 +25,7 @@ public class ApplicationProcessController {
 
 	private ApplicationProcessChannels applicationProcessChannels;
 
-
-	@Value("${next-process-step-url}")
+	@Value("${nextProcessStepUrl}")
 	private String nextProcessStepUrl;
 
 

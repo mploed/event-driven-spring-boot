@@ -26,7 +26,7 @@ import com.rometools.rome.feed.atom.Feed;
 public class CreditDecisionPoller {
 	private final Logger log = LoggerFactory.getLogger(CreditDecisionPoller.class);
 
-	@Value("${credit-decision-feed}")
+	@Value("${creditDecisionFeed}")
 	private String creditDecisionFeed;
 
 	private Date lastModified = null;

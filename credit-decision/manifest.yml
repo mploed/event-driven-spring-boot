@@ -1,0 +1,9 @@
+---
+applications:
+- name: event-credit-decision
+  memory: 1024M
+  timeout: 180
+  path: target/credit-decision-0.0.1-SNAPSHOT.jar
+  services:
+      - event-rabbitmq
+      - mysql-event-credit-decision

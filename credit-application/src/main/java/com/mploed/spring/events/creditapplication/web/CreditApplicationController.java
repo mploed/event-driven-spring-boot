@@ -32,7 +32,7 @@ public class CreditApplicationController {
 	private CreditApplicationChannels creditApplicationChannels;
 
 
-	@Value("${next-process-step-url}")
+	@Value("${nextProcessStepUrl}")
 	private String nextProcessStepUrl;
 
 	@Autowired

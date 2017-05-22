@@ -1,0 +1,12 @@
+---
+applications:
+- name: event-application-process
+  memory: 1024M
+  timeout: 180
+  path: target/application-process-0.0.1-SNAPSHOT.jar
+  services:
+      - mysql-event-application-process
+      - event-rabbitmq
+  env:
+    nextProcessStepUrl: https://event-credit-application.cfapps.io/credit-application/
+    creditDecisionFeed: https://event-credit-decision.cfapps.io/credit-decision/feed
