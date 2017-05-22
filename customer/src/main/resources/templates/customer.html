@@ -28,14 +28,11 @@
 </div>
 <div class="container">
 
-    <div class="form-group">
-        <label for="applicationNumber">Application Number</label>
-        <input class="form-control" id="applicationNumber" type="text"
-               th:field="*{customer.applicationNumber}" disabled="true"/>
-    </div>
+    <h4>Application Number: <span th:text="${customer.applicationNumber}"/></h4>
+
     <form action="#" th:action="@{saveCustomer}" th:object="${customer}" method="POST">
         <input type="hidden" id="applicationNumber" th:field="*{applicationNumber}"/>
-        <h2>Please enter your personal details</h2>
+        <h2>Please enter your personal details in order to finally confirm your credit application</h2>
         <div class="form-group">
             <label for="firstName">First Name</label>
             <input class="form-control" id="firstName" type="text" th:field="*{firstName}"/>
