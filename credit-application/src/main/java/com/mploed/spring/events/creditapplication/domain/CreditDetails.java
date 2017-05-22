@@ -5,28 +5,11 @@ import java.math.BigDecimal;
 
 @Embeddable
 public class CreditDetails {
-	private String applicationNumber;
-
 	private int term;
 
 	private BigDecimal amount;
 
 	private String purpose;
-
-	private CreditDetails() {
-	}
-
-	public CreditDetails(String applicationNumber) {
-		this.applicationNumber = applicationNumber;
-	}
-
-	public String getApplicationNumber() {
-		return applicationNumber;
-	}
-
-	public void setApplicationNumber(String applicationNumber) {
-		this.applicationNumber = applicationNumber;
-	}
 
 	public int getTerm() {
 		return term;
@@ -55,8 +38,7 @@ public class CreditDetails {
 	@Override
 	public String toString() {
 		return "CreditDetails{" +
-				"applicationNumber='" + applicationNumber + '\'' +
-				", term=" + term +
+				"term=" + term +
 				", amount=" + amount +
 				", purpose='" + purpose + '\'' +
 				'}';

@@ -27,18 +27,8 @@
     </div>
 </div>
 <div class="container">
-    <div class="form-group">
-        <label for="applicationNumber">Application Number</label>
-        <input class="form-control" id="applicationNumber" type="text"
-               th:field="*{financialSituation.applicationNumber}" disabled="true"/>
-    </div>
-
-
-    <form action="#" th:action="@{financialSituation}" th:object="${financialSituation}" method="POST">
-
-
-        <input type="hidden" id="applicationNumber" th:field="*{applicationNumber}"/>
-
+    <h4>Application Number: <span th:text="${applicationNumber}"/></h4>
+    <form action="#" th:action="@{/credit-application/__${applicationNumber}__/financialSituation}" th:object="${financialSituation}" method="POST">
 
         <h2>Please enter your financial situation:</h2>
         <h3>Earnings</h3>

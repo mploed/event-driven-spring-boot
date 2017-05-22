@@ -27,16 +27,10 @@
     </div>
 </div>
 <div class="container">
+    <h4>Application Number: <span th:text="${applicationNumber}"/></h4>
+    <form action="#" th:action="@{__${applicationNumber}__/creditDetails}" th:object="${creditDetails}" method="POST">
 
-    <form action="#" th:action="@{creditDetails}" th:object="${creditDetails}" method="POST">
 
-        <input type="hidden" id="applicationNumber" th:field="*{applicationNumber}"/>
-
-        <div class="form-group">
-            <label for="applicationNumber">Application Number</label>
-            <input class="form-control" id="applicationNumber" type="text" th:field="*{applicationNumber}"
-                   disabled="true"/>
-        </div>
 
         <h2>Please enter your credit details</h2>
         <div class="form-group">

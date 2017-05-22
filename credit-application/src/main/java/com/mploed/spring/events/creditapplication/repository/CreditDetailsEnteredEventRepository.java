@@ -4,5 +4,5 @@ import com.mploed.spring.events.creditapplication.events.internal.CreditDetailsE
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CreditDetailsEnteredEventRepository extends JpaRepository<CreditDetailsEnteredEvent, Long> {
-	CreditDetailsEnteredEvent findByCreditDetailsApplicationNumber(String applicationNumber);
+	CreditDetailsEnteredEvent findByApplicationNumber(String applicationNumber);
 }

@@ -1,6 +1,7 @@
 package com.mploed.spring.events.creditapplication.events.internal;
 
 import com.mploed.spring.events.creditapplication.domain.CreditDetails;
+import com.mploed.spring.events.creditapplication.events.PersistentEvent;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,39 +10,28 @@ import java.util.UUID;
 
 
 @Entity
-public class CreditDetailsEnteredEvent implements Serializable {
-	@Id
-	@GeneratedValue
-	private Long id;
-
-	private UUID eventId;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date creationTime;
-
+public class CreditDetailsEnteredEvent extends PersistentEvent implements InternalEvent {
 	@Embedded
 	private CreditDetails creditDetails;
 
 	private CreditDetailsEnteredEvent() {
+		super();
 	}
 
-	public CreditDetailsEnteredEvent(CreditDetails creditDetails) {
+	public CreditDetailsEnteredEvent(String applicationNumber, CreditDetails creditDetails) {
+		super(applicationNumber);
 		this.creditDetails = creditDetails;
-		this.eventId = UUID.randomUUID();
-		this.creationTime = new Date();
-	}
-
-	public UUID getEventId() {
-		return eventId;
-	}
-
-	public Date getCreationTime() {
-		return creationTime;
 	}
 
 	public CreditDetails getCreditDetails() {
 		return creditDetails;
 	}
 
-
+	@Override
+	public String toString() {
+		return "CreditDetailsEnteredEvent{" +
+				super.toString() +
+				"creditDetails=" + creditDetails +
+				'}';
+	}
 }

@@ -28,11 +28,8 @@
 </div>
 <div class="container">
     <h1>Please review your credit before proceeding:</h1>
-    <div class="form-group">
-        <label for="applicationNumber">Application Number</label>
-        <input class="form-control" id="applicationNumber" type="text" th:field="*{creditDetails.applicationNumber}"
-               disabled="true"/>
-    </div>
+    <h4>Application Number: <span th:text="${applicationNumber}"/></h4>
+
     <h2>Credit Details</h2>
     <div class="form-group">
         <label for="term">Term</label>
@@ -81,12 +78,7 @@
                th:field="*{financialSituation.outgoings.costOfLiving}" disabled="true"/>
     </div>
 
-    <form action="#" th:action="@{confirm}" th:object="${applicationNumber}" method="POST">
-
-
-        <input type="hidden" id="applicationNumber" th:field="*{applicationNumber}"/>
-
-
+    <form action="#" th:action="@{/credit-application/__${applicationNumber}__/confirm}" method="POST">
         <button type="submit" class="btn btn-default">Yes, I want this credit</button>
     </form>
 

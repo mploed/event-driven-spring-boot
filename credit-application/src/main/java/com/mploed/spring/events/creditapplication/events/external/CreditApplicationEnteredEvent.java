@@ -2,60 +2,27 @@ package com.mploed.spring.events.creditapplication.events.external;
 
 import com.mploed.spring.events.creditapplication.domain.CreditDetails;
 import com.mploed.spring.events.creditapplication.domain.FinancialSituation;
+import com.mploed.spring.events.creditapplication.events.PersistentEvent;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
-public class CreditApplicationEnteredEvent {
-	@Id
-	@GeneratedValue
-	private Long id;
-
-	private UUID eventId;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date creationTime;
-
-	@Column(name = "appNumber")
-	private String applicationNumber;
-
+public class CreditApplicationEnteredEvent extends PersistentEvent implements ExternalEvent {
 	@Embedded
-	@AttributeOverride(
-			name = "applicationNumber", column = @Column(name = "creditDetailsAppNumber")
-	)
 	private CreditDetails creditDetails;
 
 	@Embedded
-	@AttributeOverride(
-			name = "applicationNumber", column = @Column(name = "financialSituationAppNumber")
-	)
 	private FinancialSituation financialSituation;
 
+	private CreditApplicationEnteredEvent() {
+	}
 
 	public CreditApplicationEnteredEvent(String applicationNumber, CreditDetails creditDetails, FinancialSituation financialSituation) {
-		this.creationTime = new Date();
-		this.eventId = UUID.randomUUID();
-		this.applicationNumber = applicationNumber;
+		super(applicationNumber);
 		this.creditDetails = creditDetails;
 		this.financialSituation = financialSituation;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public UUID getEventId() {
-		return eventId;
-	}
-
-	public Date getCreationTime() {
-		return creationTime;
-	}
-
-	public String getApplicationNumber() {
-		return applicationNumber;
 	}
 
 	public CreditDetails getCreditDetails() {
@@ -69,11 +36,8 @@ public class CreditApplicationEnteredEvent {
 	@Override
 	public String toString() {
 		return "CreditApplicationEnteredEvent{" +
-				"id=" + id +
-				", eventId=" + eventId +
-				", creationTime=" + creationTime +
-				", applicationNumber='" + applicationNumber + '\'' +
-				", creditDetails=" + creditDetails +
+				super.toString() +
+				"creditDetails=" + creditDetails +
 				", financialSituation=" + financialSituation +
 				'}';
 	}

@@ -4,5 +4,5 @@ import com.mploed.spring.events.creditapplication.events.internal.FinancialSitua
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FinancialSituationEnteredEventRepository extends JpaRepository<FinancialSituationEnteredEvent, Long> {
-	FinancialSituationEnteredEvent findByFinancialSituation_ApplicationNumber(String applicationNumber);
+	FinancialSituationEnteredEvent findByApplicationNumber(String applicationNumber);
 }

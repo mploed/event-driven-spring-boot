@@ -51,40 +51,45 @@ public class CreditApplicationController {
 	@GetMapping("/{applicationNumber}")
 	public String index(Model model, @PathVariable String applicationNumber) {
 		LOGGER.info("Received a request for a new application: " + applicationNumber);
-		CreditDetails creditDetails = new CreditDetails(applicationNumber);
+		CreditDetails creditDetails = new CreditDetails();
 		model.addAttribute("creditDetails", creditDetails);
+		model.addAttribute("applicationNumber", applicationNumber);
 		return "creditDetails";
 	}
 
 
-	@PostMapping("/creditDetails")
-	public String saveCreditDetails(@ModelAttribute CreditDetails creditDetails, Model model) {
+	@PostMapping("/{applicationNumber}/creditDetails")
+	public String saveCreditDetails(@PathVariable String applicationNumber,
+	                                @ModelAttribute CreditDetails creditDetails,
+	                                Model model) {
 		LOGGER.info("Received credit details: " + creditDetails);
-		CreditDetailsEnteredEvent creditDetailsEnteredEvent = new CreditDetailsEnteredEvent(creditDetails);
+		CreditDetailsEnteredEvent creditDetailsEnteredEvent = new CreditDetailsEnteredEvent(applicationNumber, creditDetails);
 		creditDetailsEnteredEventRepository.save(creditDetailsEnteredEvent);
-		model.addAttribute("financialSituation", new FinancialSituation(creditDetails.getApplicationNumber()));
+		model.addAttribute("financialSituation", new FinancialSituation());
+		model.addAttribute("applicationNumber", applicationNumber);
 		return "financialSituation";
 	}
 
-	@PostMapping("/financialSituation")
-	public String saveFinancialSituation(@ModelAttribute FinancialSituation financialSituation, Model model) {
-		String applicationNumber = financialSituation.getApplicationNumber();
+	@PostMapping("/{applicationNumber}/financialSituation")
+	public String saveFinancialSituation(@PathVariable String applicationNumber,
+	                                     @ModelAttribute FinancialSituation financialSituation,
+	                                     Model model) {
+		LOGGER.info("Received financial situation for: " + applicationNumber);
 		LOGGER.info("Received financial situation: " + financialSituation);
-		FinancialSituationEnteredEvent financialSituationEnteredEvent = new FinancialSituationEnteredEvent(financialSituation);
+		FinancialSituationEnteredEvent financialSituationEnteredEvent = new FinancialSituationEnteredEvent(applicationNumber, financialSituation);
 		financialSituationEnteredEventRepository.save(financialSituationEnteredEvent);
-		CreditDetailsEnteredEvent creditDetailsEnteredEvent = creditDetailsEnteredEventRepository.findByCreditDetailsApplicationNumber(applicationNumber);
+		CreditDetailsEnteredEvent creditDetailsEnteredEvent = creditDetailsEnteredEventRepository.findByApplicationNumber(applicationNumber);
 		model.addAttribute("creditDetails", creditDetailsEnteredEvent.getCreditDetails());
 		model.addAttribute("financialSituation", financialSituation);
-		model.addAttribute("applicationNumber", creditDetailsEnteredEvent.getCreditDetails());
+		model.addAttribute("applicationNumber", applicationNumber);
 		return "summary";
 	}
 
-	@PostMapping("/confirm")
-	public RedirectView confirmCreditApplication(@ModelAttribute CreditDetails creditDetails) {
-		String applicationNumber = creditDetails.getApplicationNumber();
+	@PostMapping("/{applicationNumber}/confirm")
+	public RedirectView confirmCreditApplication(@PathVariable String applicationNumber) {
 		LOGGER.info("app number: " + applicationNumber);
-		FinancialSituationEnteredEvent financialSituationEnteredEvent = financialSituationEnteredEventRepository.findByFinancialSituation_ApplicationNumber(applicationNumber);
-		CreditDetailsEnteredEvent creditDetailsEnteredEvent = creditDetailsEnteredEventRepository.findByCreditDetailsApplicationNumber(applicationNumber);
+		FinancialSituationEnteredEvent financialSituationEnteredEvent = financialSituationEnteredEventRepository.findByApplicationNumber(applicationNumber);
+		CreditDetailsEnteredEvent creditDetailsEnteredEvent = creditDetailsEnteredEventRepository.findByApplicationNumber(applicationNumber);
 
 		CreditApplicationEnteredEvent creditApplicationEnteredEvent = new CreditApplicationEnteredEvent(applicationNumber,
 				creditDetailsEnteredEvent.getCreditDetails(),
