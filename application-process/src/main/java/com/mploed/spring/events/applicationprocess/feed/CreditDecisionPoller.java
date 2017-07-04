@@ -33,6 +33,7 @@ public class CreditDecisionPoller {
 
 	CreditApplicationStatusRepository repository;
 
+	// Sprint Rest Template
 	RestTemplate restTemplate;
 
 	@Autowired
@@ -41,9 +42,8 @@ public class CreditDecisionPoller {
 		this.restTemplate = restTemplate;
 	}
 
-	@Scheduled(fixedDelay = 10000)
+	@Scheduled(fixedDelay = 15000)
 	public void poll() {
-		log.info("Starting Polling");
 
 		HttpHeaders requestHeaders = new HttpHeaders();
 		if (lastModified != null) {
@@ -73,11 +73,11 @@ public class CreditDecisionPoller {
 			}
 			if (response.getHeaders().getFirst("Last-Modified") != null) {
 				lastModified = DateUtils.parseDate(response.getHeaders().getFirst("Last-Modified"));
-				log.info("Last-Modified header {}", lastModified);
+				log.info("LastModified header {}", lastModified);
 			} else {
 				if (lastUpdateInFeed != null) {
 					lastModified = lastUpdateInFeed;
-					log.info("Last update in feed {}", lastModified);
+					log.info("Last in feed {}", lastModified);
 				}
 
 			}
