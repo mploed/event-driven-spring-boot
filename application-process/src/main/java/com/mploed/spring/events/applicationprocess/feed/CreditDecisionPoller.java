@@ -33,6 +33,7 @@ public class CreditDecisionPoller {
 
 	CreditApplicationStatusRepository repository;
 
+	// Sprint Rest Template
 	RestTemplate restTemplate;
 
 	@Autowired
@@ -41,15 +42,13 @@ public class CreditDecisionPoller {
 		this.restTemplate = restTemplate;
 	}
 
-	@Scheduled(fixedDelay = 10000)
+	@Scheduled(fixedDelay = 15000)
 	public void poll() {
-		log.info("Starting Polling");
 
 		HttpHeaders requestHeaders = new HttpHeaders();
 		if (lastModified != null) {
 			requestHeaders.set("If-Modified-Since", DateUtils.formatDate(lastModified));
 		}
-		log.info("Header Set");
 		HttpEntity<?> requestEntity = new HttpEntity(requestHeaders);
 		ResponseEntity<Feed> response = restTemplate.exchange(creditDecisionFeed, HttpMethod.GET, requestEntity, Feed.class);
 
@@ -59,7 +58,7 @@ public class CreditDecisionPoller {
 			for (Entry entry : feed.getEntries()) {
 				String applicationNumber = entry.getSummary().getValue();
 				if ((lastModified == null) || (entry.getUpdated().after(lastModified))) {
-					log.info(applicationNumber + " is brandnew, updating the current status");
+					log.info(applicationNumber + " is new, updating the status");
 
 
 					CreditApplicationStatus applicationStatus = repository.findByApplicationNumber(applicationNumber);
@@ -74,11 +73,11 @@ public class CreditDecisionPoller {
 			}
 			if (response.getHeaders().getFirst("Last-Modified") != null) {
 				lastModified = DateUtils.parseDate(response.getHeaders().getFirst("Last-Modified"));
-				log.info("Last-Modified header is {}", lastModified);
+				log.info("LastModified header {}", lastModified);
 			} else {
 				if (lastUpdateInFeed != null) {
 					lastModified = lastUpdateInFeed;
-					log.info("Last update in feed is {}", lastModified);
+					log.info("Last in feed {}", lastModified);
 				}
 
 			}
