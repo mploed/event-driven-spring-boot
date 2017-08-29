@@ -184,3 +184,5 @@ are dealing with situations like these:
 
 You can find "Events via Feeds" in the customer and the credit-decision (see Feeds) applications. 
 
+## Outlook
+In a future revision I plan to switch from RabbitMQ to Kafka as an event bus
