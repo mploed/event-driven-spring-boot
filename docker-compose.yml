@@ -1,0 +1,106 @@
+version: '2'
+services:
+    rabbit-mq:
+        container_name: rabbit-mq
+        image: rabbitmq:3
+        expose:
+            - 5672
+        networks:
+            - event-driven-spring-boot-network
+        logging:
+            driver: json-file
+    credit-decision:
+        container_name: credit-decision
+        build:
+            context: credit-decision
+            dockerfile: Dockerfile
+        image: credit-decision:latest
+        expose:
+            - 9004
+        ports:
+            - "9004:9004"
+        networks:
+            - event-driven-spring-boot-network
+        depends_on:
+            - rabbit-mq
+        links:
+            - rabbit-mq:rabbit-mq
+        logging:
+            driver: json-file
+    application-process:
+        container_name: application-process
+        build:
+            context: application-process
+            dockerfile: Dockerfile
+        image: application-process:latest
+        expose:
+            - 9000
+        ports:
+            - "9000:9000"
+        networks:
+            - event-driven-spring-boot-network
+        depends_on:
+            - rabbit-mq
+            - credit-decision
+        links:
+            - rabbit-mq:rabbit-mq
+            - credit-decision:credit-decision
+        logging:
+            driver: json-file
+    credit-application:
+        container_name: credit-application
+        build:
+            context: credit-application
+            dockerfile: Dockerfile
+        image: credit-application:latest
+        expose:
+            - 9001
+        ports:
+            - "9001:9001"
+        networks:
+            - event-driven-spring-boot-network
+        depends_on:
+            - rabbit-mq
+        links:
+            - rabbit-mq:rabbit-mq
+        logging:
+            driver: json-file
+    customer:
+        container_name: customer
+        build:
+            context: customer
+            dockerfile: Dockerfile
+        image: customer:latest
+        expose:
+            - 9002
+        ports:
+            - "9002:9002"
+        networks:
+            - event-driven-spring-boot-network
+        depends_on:
+            - rabbit-mq
+        links:
+            - rabbit-mq:rabbit-mq
+        logging:
+            driver: json-file
+    scoring:
+        container_name: scoring
+        build:
+            context: scoring
+            dockerfile: Dockerfile
+        image: scoring:latest
+        expose:
+            - 9003
+        ports:
+            - "9003:9003"
+        networks:
+            - event-driven-spring-boot-network
+        depends_on:
+            - rabbit-mq
+        links:
+            - rabbit-mq:rabbit-mq
+        logging:
+            driver: json-file
+networks:
+    event-driven-spring-boot-network:
+        driver: bridge

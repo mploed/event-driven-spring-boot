@@ -13,10 +13,13 @@ These examples contain various different ways to model and deal with events:
 - Events as Atom Feeds
 
 ## Prerequisites
-- A basic installation of RabbitMQ must be installed and running (rabbitmq-server)
+- You need to have Docker installed
 
 ## How to run and install the example
-Compile each module with mvn clean install and start them with mvn spring:run
+In the root directory you need to
+1. Compile everything with ./mvnw package
+2. Start everything up with docker-compose up --build
+
 
 ## URLs and Ports
 Each of the modules is it's own Spring Boot Application which can be accessed as follows:
@@ -183,6 +186,3 @@ are dealing with situations like these:
 - you need to have an event replay functionality in place that enables consumers to restore their replicated data
 
 You can find "Events via Feeds" in the customer and the credit-decision (see Feeds) applications. 
-
-## Outlook
-In a future revision I plan to switch from RabbitMQ to Kafka as an event bus
