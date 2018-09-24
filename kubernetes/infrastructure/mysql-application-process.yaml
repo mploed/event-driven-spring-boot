@@ -1,0 +1,81 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-process-secret
+type: Opaque
+data:
+  MYSQL_ROOT_PASSWORD: cGFzc3dvcmQ= #password
+  MYSQL_USER: cHJvY2Vzcw== #process
+  MYSQL_PASSWORD: dGVzdDEyMw== #test123
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mysql-process-volumeclaim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mysql-process
+  labels:
+    app: mysql-process
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-process
+  template:
+    metadata:
+      labels:
+        app: mysql-process
+    spec:
+      containers:
+        - image: mysql:5.6
+          name: mysql-process
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-process-secret
+                  key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_DATABASE
+              value: application-process
+            - name: MYSQL_USER
+              valueFrom:
+                  secretKeyRef:
+                    name: mysql-process-secret
+                    key: MYSQL_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                  secretKeyRef:
+                    name: mysql-process-secret
+                    key: MYSQL_PASSWORD
+          ports:
+            - containerPort: 3306
+              name: mysql-process
+          volumeMounts:
+            - name: mysql-process-persistent-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-process-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-process-volumeclaim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-process
+  labels:
+    app: mysql-process
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3306
+  selector:
+    app: mysql-process

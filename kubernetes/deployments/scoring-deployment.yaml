@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scoring
+spec:
+  selector:
+    matchLabels:
+      app: event-driven-spring-boot
+      tier: scoring
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: event-driven-spring-boot
+        tier: scoring
+    spec:
+      containers:
+      - name: scoring
+        image: mploed/event-spring-boot-scoring:latest
+        ports:
+        - containerPort: 9003

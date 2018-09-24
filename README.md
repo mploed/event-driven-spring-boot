@@ -20,6 +20,8 @@ In the root directory you need to
 1. Compile everything with ./mvnw package
 2. Start everything up with docker-compose up --build
 
+## Running on Kubernetes
+Mind the KubernetesSetup.md file in the kubernetes directory
 
 ## URLs and Ports
 Each of the modules is it's own Spring Boot Application which can be accessed as follows:

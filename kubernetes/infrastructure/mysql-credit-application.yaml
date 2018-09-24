@@ -1,0 +1,81 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-credit-application-secret
+type: Opaque
+data:
+  MYSQL_ROOT_PASSWORD: cGFzc3dvcmQ= #password
+  MYSQL_USER: YXBwbGljYXRpb24= #application
+  MYSQL_PASSWORD: dGVzdDEyMw== #test123
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mysql-credit-application-volumeclaim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mysql-credit-ap
+  labels:
+    app: mysql-credit-ap
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-credit-ap
+  template:
+    metadata:
+      labels:
+        app: mysql-credit-ap
+    spec:
+      containers:
+        - image: mysql:5.6
+          name: mysql-credit-ap
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-credit-application-secret
+                  key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_DATABASE
+              value: credit-application
+            - name: MYSQL_USER
+              valueFrom:
+                  secretKeyRef:
+                    name: mysql-credit-application-secret
+                    key: MYSQL_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                  secretKeyRef:
+                    name: mysql-credit-application-secret
+                    key: MYSQL_PASSWORD
+          ports:
+            - containerPort: 3306
+              name: mysql-credit-ap
+          volumeMounts:
+            - name: mysql-credit-application-persistent-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-credit-application-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-credit-application-volumeclaim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-credit-ap
+  labels:
+    app: mysql-credit-ap
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3306
+  selector:
+    app: mysql-credit-ap

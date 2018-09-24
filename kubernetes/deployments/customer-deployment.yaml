@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer
+spec:
+  selector:
+    matchLabels:
+      app: event-driven-spring-boot
+      tier: customer
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: event-driven-spring-boot
+        tier: customer
+    spec:
+      containers:
+      - name: customer
+        image: mploed/event-spring-boot-customer:latest
+        ports:
+        - containerPort: 9002
+        env:
+          - name: nextProcessStepUrl
+            valueFrom:
+              configMapKeyRef:
+                name: customer-config
+                key: nextProcessStepUrl
+          - name: routeToSelf
+            valueFrom:
+              configMapKeyRef:
+                name: customer-config
+                key: routeToSelf
+          - name: spring_datasource_url
+            value: jdbc:mysql://mysql-customer/customer?verifyServerCertificate=false&useSSL=false&requireSSL=false
+          - name: spring.datasource.driver-class-name
+            value: com.mysql.jdbc.Driver
+          - name: spring_datasource_username
+            valueFrom:
+              secretKeyRef:
+                name: mysql-customer-secret
+                key: MYSQL_USER
+          - name: spring_datasource_password
+            valueFrom:
+              secretKeyRef:
+                name: mysql-customer-secret
+                key: MYSQL_PASSWORD

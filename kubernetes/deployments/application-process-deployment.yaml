@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: application-process
+spec:
+  selector:
+    matchLabels:
+      app: event-driven-spring-boot
+      tier: application-process
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: event-driven-spring-boot
+        tier: application-process
+    spec:
+      containers:
+      - name: application-process
+        image: mploed/event-spring-boot-application-process:latest
+        ports:
+        - containerPort: 9000
+        env:
+          - name: nextProcessStepUrl
+            valueFrom:
+              configMapKeyRef:
+                name: application-process-config
+                key: nextProcessStepUrl
+          - name: spring_datasource_url
+            value: jdbc:mysql://mysql-process/application-process?verifyServerCertificate=false&useSSL=false&requireSSL=false
+          - name: spring.datasource.driver-class-name
+            value: com.mysql.jdbc.Driver
+          - name: spring_datasource_username
+            valueFrom:
+              secretKeyRef:
+                name: mysql-process-secret
+                key: MYSQL_USER
+          - name: spring_datasource_password
+            valueFrom:
+              secretKeyRef:
+                name: mysql-process-secret
+                key: MYSQL_PASSWORD

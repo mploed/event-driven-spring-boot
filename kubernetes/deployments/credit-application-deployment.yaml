@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: credit-application
+spec:
+  selector:
+    matchLabels:
+      app: event-driven-spring-boot
+      tier: credit-application
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: event-driven-spring-boot
+        tier: credit-application
+    spec:
+      containers:
+      - name: credit-application
+        image: mploed/event-spring-boot-credit-application:latest
+        ports:
+        - containerPort: 9001
+        env:
+          - name: nextProcessStepUrl
+            valueFrom:
+              configMapKeyRef:
+                name: credit-application-config
+                key: nextProcessStepUrl
+          - name: spring_datasource_url
+            value: jdbc:mysql://mysql-credit-ap/credit-application?verifyServerCertificate=false&useSSL=false&requireSSL=false
+          - name: spring.datasource.driver-class-name
+            value: com.mysql.jdbc.Driver
+          - name: spring_datasource_username
+            valueFrom:
+              secretKeyRef:
+                name: mysql-credit-application-secret
+                key: MYSQL_USER
+          - name: spring_datasource_password
+            valueFrom:
+              secretKeyRef:
+                name: mysql-credit-application-secret
+                key: MYSQL_PASSWORD

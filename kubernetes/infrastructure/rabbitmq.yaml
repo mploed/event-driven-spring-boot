@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbit-mq
+  labels:
+    app: event-driven-spring-boot
+    tier: messaging
+spec:
+  ports:
+  - port: 5672
+    targetPort: 5672
+  selector:
+    app: event-driven-spring-boot
+    tier: messaging
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbit-mq
+spec:
+  selector:
+    matchLabels:
+      app: event-driven-spring-boot
+      tier: messaging
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: event-driven-spring-boot
+        tier: messaging
+    spec:
+      containers:
+      - name: rabbit-mq
+        image: rabbitmq:3
+        ports:
+        - containerPort: 5672

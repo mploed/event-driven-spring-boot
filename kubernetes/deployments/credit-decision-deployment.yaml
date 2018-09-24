@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: credit-decision
+spec:
+  selector:
+    matchLabels:
+      app: event-driven-spring-boot
+      tier: credit-decision
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: event-driven-spring-boot
+        tier: credit-decision
+    spec:
+      containers:
+      - name: credit-decision
+        image: mploed/event-spring-boot-credit-decision:latest
+        ports:
+        - containerPort: 9004
+        env:
+        - name: spring_datasource_url
+          value: jdbc:mysql://mysql-decision/credit-decision?verifyServerCertificate=false&useSSL=false&requireSSL=false
+        - name: spring.datasource.driver-class-name
+          value: com.mysql.jdbc.Driver
+        - name: spring_datasource_username
+          valueFrom:
+            secretKeyRef:
+              name: mysql-decision-secret
+              key: MYSQL_USER
+        - name: spring_datasource_password
+          valueFrom:
+            secretKeyRef:
+              name: mysql-decision-secret
+              key: MYSQL_PASSWORD

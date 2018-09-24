@@ -1,0 +1,81 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-decision-secret
+type: Opaque
+data:
+  MYSQL_ROOT_PASSWORD: cGFzc3dvcmQ= #password
+  MYSQL_USER: Y3JlZGl0LWRlY2lzaW9u #credit-decision
+  MYSQL_PASSWORD: dGVzdDEyMw== #test123
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mysql-decision-volumeclaim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mysql-decision
+  labels:
+    app: mysql-decision
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-decision
+  template:
+    metadata:
+      labels:
+        app: mysql-decision
+    spec:
+      containers:
+        - image: mysql:5.6
+          name: mysql-decision
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-decision-secret
+                  key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_DATABASE
+              value: credit-decision
+            - name: MYSQL_USER
+              valueFrom:
+                  secretKeyRef:
+                    name: mysql-decision-secret
+                    key: MYSQL_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                  secretKeyRef:
+                    name: mysql-decision-secret
+                    key: MYSQL_PASSWORD
+          ports:
+            - containerPort: 3306
+              name: mysql-decision
+          volumeMounts:
+            - name: mysql-decision-persistent-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-decision-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-decision-volumeclaim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-decision
+  labels:
+    app: mysql-decision
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3306
+  selector:
+    app: mysql-decision
