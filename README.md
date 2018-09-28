@@ -172,17 +172,17 @@ Other events that fall into this category are:
 
 ##### Idea of Bounded Context:
 Please take a close look at how the CreditApplicationEnteredEvent is being reflected in the scoring application. Yes, we
-take in all the payload from the broker but the public model of the event has a clear focus on the scoring context's view 
-  on the data.
+take in all the payload from the broker but the public model of the event has a clear focus on the scoring context's view
+on the data.
 
 #### Events with a Resource URL
-These Events do not contain a lot of information. They may contian something like a business process identifier such as
+These Events do not contain a lot of information. They may contain something like a business process identifier such as
 the applicationNumber in this example but for the purpose of this demo I refrained from doing that. So the CustomerCreatedEvent
 only contians the URL to the Customer REST Resource from which interested contexts can obtain the payload from.
 
 
 #### "Events" via Feeds
-Althoug the usage of feeds is no plain and pure event driven processing style I think that they come in handy when you
+Although the usage of feeds is no plain and pure event driven processing style I think that they come in handy when you
 are dealing with situations like these:
 - you have issues with your message broker and firewalls and these issues can't be resolved easily
 - you need to have an event replay functionality in place that enables consumers to restore their replicated data
